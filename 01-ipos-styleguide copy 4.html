@@ -838,18 +838,15 @@ rows.forEach(function(row) {
 }
 </script>
 <script>
-function showHideFilterMenu() {
-  var selectedOption = $("#multiselectSample option:selected").text();
-  if (selectedOption === "IP Status") {
-    $("#filterBy").show();
-  } else {
-    $("#filterBy").hide();
-  }
-
-</script>
-<script>
-  $(document).ready(function() {
-  showHideFilterMenu();
+$(document).ready(function() {
+  $("#filterBy .selectpicker").on("changed.bs.select", function(e, clickedIndex, isSelected, previousValue) {
+    var selected = $(this).find("option").eq(clickedIndex).text().trim();
+    if (selected === "IP Status") {
+      $("#currentDate").show();
+    } else {
+      $("#currentDate").hide();
+    }
+  });
 });
 </script>
   </body>
