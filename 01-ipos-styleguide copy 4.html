@@ -290,7 +290,7 @@ $(document).ready(function() {
                                         <div class="row" id="currentDate">
                                       <div class="col-sm-4 dateGroup">
                                         <div class="form-group" id="filterBy">
-                                          <label for="multiselectSample">Filter By</label>
+                                          <label for="multiselectSample">Filter</label>
                                          <select class="selectpicker" multiple data-live-search="true">
                                           <optgroup label="">
                                             <option disabled><strong>Filter By APPLICATION STATUS</strong></option>
@@ -838,15 +838,31 @@ rows.forEach(function(row) {
 }
 </script>
 <script>
-  $(document).ready(function() {
-  $('#filter-by').on('change', function() {
-    var selectedValue = $(this).val();
-    if (selectedValue === '2') {
-      $('#filterBy').show();
+  var filterByDiv = document.getElementById("filterBy");
+  var ipStatusSelect = document.getElementById("ListView");
+
+  ipStatusSelect.onchange = function() {
+    if (ipStatusSelect.value === "1") {
+      filterByDiv.style.display = "block";
     } else {
-      $('#filterBy').hide();
+      filterByDiv.style.display = "none";
+    }
+  };
+
+  document.addEventListener("click", function(event) {
+    if (event.target.closest("#filterBy") === null && ipStatusSelect.value !== "1") {
+      filterByDiv.style.display = "none";
     }
   });
+  $(document).on('click', function(event) {
+  // Check if the clicked element is inside the filter dropdown
+  var filterDropdown = $('#filterBy');
+  var isClickedInsideFilter = filterDropdown.has(event.target).length > 0;
+
+  // If the click was outside of the filter dropdown, hide it
+  if (!isClickedInsideFilter) {
+    filterDropdown.hide();
+  }
 });
 </script>
   </body>
