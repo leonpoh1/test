@@ -253,22 +253,22 @@ $(document).ready(function() {
                                           <div class="col-sm-4 dateGroup">
                                             <label for="ListView">List View</label>
                                             <select class="form-control selectpicker" id="ListView" name="ListView">
-                                              <option value="1">Text Only</option>
-                                              <option value="2">Text and Thumbnails</option>
-                                              <option value="3">Compact List</option>
+                                              <option value="Listview-1">Text Only</option>
+                                              <option value="Listview-2">Text and Thumbnails</option>
+                                              <option value="Listview-3">Compact List</option>
       
                                             </select>
                                           </div>
                                           <div class="col-sm-4 dateGroup">
                                             <div class="form-group">
                                               <label for="filter-by">Filter By</label>
-                                              <select class="form-control selectpicker" id="ListView" name="ListView">
-                                                <option value="1">IP Status</option>
-                                                <option value="2">Publication Date</option>
-                                                <option value="3">Filing Date</option>
-                                                <option value="4">Priority Claim Date</option>
-                                                <option value="5">Applicant Name</option>
-                                                <option value="6">Inventor Name</option>
+                                              <select class="form-control selectpicker" id="filter-by" name="filter-by">
+                                                <option value="filterby1">IP Status</option>
+                                                <option value="filterby2">Publication Date</option>
+                                                <option value="filterby3">Filing Date</option>
+                                                <option value="filterby4">Priority Claim Date</option>
+                                                <option value="filterby5">Applicant Name</option>
+                                                <option value="filterby6">Inventor Name</option>
                                               </select>
                                             </div>
                                           </div>
@@ -286,8 +286,8 @@ $(document).ready(function() {
                                           </div>
                                       </div>
 
-                                      <div class="form-group">
-                                        <div class="row" id="currentDate">
+                                      
+                                        <div class="row">
                                       <div class="col-sm-4 dateGroup">
                                         <div class="form-group" id="filterBy">
                                           <label for="multiselectSample">&nbsp</label>
@@ -838,16 +838,17 @@ rows.forEach(function(row) {
 }
 </script>
 <script>
-$(document).ready(function() {
-  $("#filterBy .selectpicker").on("changed.bs.select", function(e, clickedIndex, isSelected, previousValue) {
-    var selected = $(this).find("option").eq(clickedIndex).text().trim();
-    if (selected === "IP Status") {
-      $("#currentDate").show();
-    } else {
-      $("#currentDate").hide();
+$(document).ready(function(){
+  $('.selectpicker').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+    var selected = $(e.currentTarget).val();
+    if (selected.includes('IP Status')) {
+      $('#filterBy').show();
+    } else if ($(e.target).closest('.dropdown-menu').attr('id') == 'filterDropdownMenu') {
+      $('#filterBy').hide();
     }
   });
 });
+
 </script>
   </body>
 </html>
