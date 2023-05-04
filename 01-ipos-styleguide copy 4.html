@@ -248,7 +248,7 @@ $(document).ready(function() {
                                     
                                       <div class="form-group">
                                         
-                                        <div class="row" id="currentDate">
+                                        <div class="row">
                                           
                                           <div class="col-sm-4 dateGroup">
                                             <label for="ListView">List View</label>
@@ -291,7 +291,7 @@ $(document).ready(function() {
                                       <div class="col-sm-4 dateGroup">
                                         <div class="form-group" id="filterBy">
                                           <label for="multiselectSample">&nbsp</label>
-                                         <select class="selectpicker" multiple data-live-search="true">
+                                          <select class="selectpicker" multiple data-live-search="true" onchange="filterByChange(this)">
                                           <optgroup label="">
                                             <option disabled><strong>Filter By APPLICATION STATUS</strong></option>
                                           </optgroup>
@@ -838,23 +838,18 @@ rows.forEach(function(row) {
 }
 </script>
 <script>
-$(document).ready(function() {
-  $('#ListView').on('change', function(e) {
-    e.stopPropagation();
-    if ($(this).val() == 1) {
-      $('#filterBy').show();
-    } else {
-      $('#filterBy').hide();
-    }
-  });
-  
-  $('#filterBy').on('click', function(e) {
-    e.stopPropagation();
-  });
-  
-  $(document).on('click', function() {
-    $('#filterBy').hide();
-  });
+function showHideFilterMenu() {
+  var selectedOption = $("#multiselectSample option:selected").text();
+  if (selectedOption === "IP Status") {
+    $("#filterBy").show();
+  } else {
+    $("#filterBy").hide();
+  }
+
+</script>
+<script>
+  $(document).ready(function() {
+  showHideFilterMenu();
 });
 </script>
   </body>
