@@ -145,6 +145,9 @@ table.search-results {
   width: 100%;
   table-layout: auto;
 }
+.filter .compact:checked ~ .table-content ~ .paragraph {
+  display: none;
+}
 
      </style>
      <style>
@@ -411,9 +414,11 @@ $(document).ready(function() {
                                             <p><strong>1. Novel aerify snow boots</strong></p>
                                             <p>10202002094R・DONYANG BUILDING</p>
                                             <p>Priority Claim Date: 2019-11-11・Journal Date: 2020-01-16</p>
+                                            <div class="paragraph">
                                             <p>The utility model discloses a novel aerify snow booys, including the inflatable packer, the inflatable packer front end is a circular wear structure, and the unflatable packer
                                               rear end is the triangle-shaped structure
                                             </p>
+                                          </div>
                                           </td>
                                         </tr>
                                         <tr onclick="rowClicked(this)" data-tab-id="tab-2">
@@ -430,8 +435,10 @@ $(document).ready(function() {
                                             <p><strong>2. SEPARATE BOOTS</strong></p>
                                             <p>10202002094A・KIM YONG JUN</p>
                                             <p>Priority Claim Date: 2019-11-11・Journal Date: 2020-01-16</p>
+                                            <div class="paragraph">
                                             <p>Leather boots are provided, which combine the bootys part and the shoes part when in use and separate the boots part and the shoes pa...
                                             </p>
+                                          </div>
                                           </td>
                                         </tr>
                                         <tr onclick="rowClicked(this)" data-tab-id="tab-2">
@@ -447,10 +454,12 @@ $(document).ready(function() {
                                           <td data-title="Objection">
                                             <p><strong>3. Refrigerator</strong></p>
                                             <p>10202002094R・STATE CORP CHINA</p>
+                                            <div class="paragraph">
                                             <p>Priority Claim Date: 2019-11-11・Journal Date: 2020-01-16</p>
                                             <p>The utility model discloses a novel aerify snow booys, including the inflatable packer, the inflatable packer front end is a circular wear structure, and the unflatable packer
                                               rear end is the triangle-shaped structure
                                             </p>
+                                          </div>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -877,14 +886,17 @@ function toggleThumbnails() {
     $('.thumbnail').hide();
     $('td[data-title!="table-drawing"]').show();
     $('td[data-title="table-drawing"]').hide();
+    $('.paragraph').show(); // show the paragraph
   } else if (display == 'compact') {
     $('.thumbnail').hide();
     $('td[data-title!="table-drawing"]').show();
     $('td[data-title="table-drawing"]').hide();
+    $('.paragraph').hide(); // hide the paragraph
   } else if (display == 'textthumbnails') {
     $('.thumbnail').show();
     $('td[data-title!="table-drawing"]').show();
     $('td[data-title="table-drawing"]').show();
+    $('.paragraph').show(); // show the paragraph
   }
 
   // Hide the "Drawing Images" column if the selected display mode is not "Text and Thumbnails"
