@@ -117,6 +117,11 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+.tab-pane {
+  width: 100%;
+  max-width: 800px; /* set a fixed width for the tab panel */
+  overflow-y: scroll; /* create a vertical scrollbar when necessary */
+}
 .btn {
     margin-left: 0px; 
     margin-bottom: 0px; /* Add margin to the right of each button */
@@ -125,22 +130,41 @@
     margin-right: 0; /* Remove margin from the last button */
   }
   table tbody tr:hover,
-  table tbody tr.highlighted {
+table tbody tr.highlighted,
+table tbody tr:active {
   background-color: rgb(212, 212, 212);;
   cursor: pointer;
 }
-#container1 {
-  min-height: 1500px;
+table tbody tr {
+  height: 50px; /* Set the height to the desired value */
+}
+.hidden {
+  display: none;
+}
+table.search-results {
+  width: 100%;
+  table-layout: auto;
 }
 
      </style>
+     <style>
+      #DT th {
+        width: auto !important;
+      }
+    </style>
+
 <script>
 $(document).ready(function() {
   $('#DT').DataTable().search('').draw();
   $('#DT_filter').hide();
 });
 </script>
-
+<script>
+    // Remove the "Filter" option from the list of options when the dropdown menu is shown
+    $('.selectpicker').on('shown.bs.select', function () {
+    $(this).find('option[value="Filter"]').remove();
+  });
+</script>
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
@@ -252,11 +276,10 @@ $(document).ready(function() {
                                           
                                           <div class="col-sm-4 dateGroup">
                                             <label for="ListView">List View</label>
-                                            <select class="form-control selectpicker" id="ListView" name="ListView">
-                                              <option value="Listview-1">Text Only</option>
-                                              <option value="Listview-2">Text and Thumbnails</option>
-                                              <option value="Listview-3">Compact List</option>
-      
+                                            <select id="display-mode" onchange="toggleThumbnails()">
+                                              <option value="textthumbnails">Text and Thumbnails</option>
+                                              <option value="text">Text Only</option>
+                                              <option value="compact">Compact View</option>
                                             </select>
                                           </div>
                                           <div class="col-sm-4 dateGroup">
@@ -290,9 +313,9 @@ $(document).ready(function() {
                                         <div class="row">
                                       <div class="col-sm-4 dateGroup">
                                         <div class="form-group" id="filterBy">
-                                          <label for="multiselectSample">&nbsp</label>
-                                          <select class="selectpicker" multiple data-live-search="true" onchange="filterByChange(this)">
-                                          <optgroup label="">
+                                          <label for="multiselectSample">Filter</label>
+                                          <select class="selectpicker" multiple data-live-search="true" onchange="filterByChange(this)" placeholder="Filter">
+                                            <optgroup label="">
                                             <option disabled><strong>Filter By APPLICATION STATUS</strong></option>
                                           </optgroup>
                                           <option>Abandoned (Extension of Time possible)</option>
@@ -365,11 +388,14 @@ $(document).ready(function() {
                               </br>
                             
                                       <thead>
+                                        <tr>
                                         <th width="8%"></th>
                                         <th width="8%"></th>
-                                        <th width="62%"></th>
+                                        <th width="84%"></th>
+                                      </tr>
                                       </thead>
                                       <tbody>
+                                        
                                         <tr onclick="rowClicked(this,)" data-tab-id="tab-1" class="selected">
                                           <td data-title="Select">
                                             <div class="checkbox checkbox-info">
@@ -377,11 +403,12 @@ $(document).ready(function() {
                                               <label for="objbox1"></label>
                                             </div>
                                           </td>
-                                          <td data-title="Number">
-                                            <p>1.</p>
+                                          <td data-title="table-drawing" id="table-drawing">
+                                            
+                                            <p>(DRAWING IMAGE)</p>
                                           </td>
                                           <td data-title="Objection">
-                                            <p><strong>Novel aerify snow boots</strong></p>
+                                            <p><strong>1. Novel aerify snow boots</strong></p>
                                             <p>10202002094R・DONYANG BUILDING</p>
                                             <p>Priority Claim Date: 2019-11-11・Journal Date: 2020-01-16</p>
                                             <p>The utility model discloses a novel aerify snow booys, including the inflatable packer, the inflatable packer front end is a circular wear structure, and the unflatable packer
@@ -396,29 +423,29 @@ $(document).ready(function() {
                                               <label for="objbox2"></label>
                                             </div>
                                           </td>
-                                          <td data-title="S/N">
-                                            <p>2.</p>
+                                          <td data-title="table-drawing" id="table-drawing">
+                                            <p>(DRAWING IMAGE)</p>
                                           </td>
                                           <td data-title="Objection">
-                                            <p><strong>SEPARATE BOOTS</strong></p>
-                                            <p>10202002094R・KIM YONG JUN</p>
+                                            <p><strong>2. SEPARATE BOOTS</strong></p>
+                                            <p>10202002094A・KIM YONG JUN</p>
                                             <p>Priority Claim Date: 2019-11-11・Journal Date: 2020-01-16</p>
                                             <p>Leather boots are provided, which combine the bootys part and the shoes part when in use and separate the boots part and the shoes pa...
                                             </p>
                                           </td>
                                         </tr>
-                                        <tr>
+                                        <tr onclick="rowClicked(this)" data-tab-id="tab-2">
                                           <td data-title="Select">
                                             <div class="checkbox checkbox-info">
                                               <input type="checkbox" id="objbox3" value="">
                                               <label for="objbox3"></label>
                                             </div>
                                           </td>
-                                          <td data-title="S/N">
-                                            <p>3</p>
+                                          <td data-title="table-drawing" id="table-drawing">
+                                            <p>(DRAWING IMAGE)</p>
                                           </td>
                                           <td data-title="Objection">
-                                            <p><strong>Refrigerator</strong></p>
+                                            <p><strong>3. Refrigerator</strong></p>
                                             <p>10202002094R・STATE CORP CHINA</p>
                                             <p>Priority Claim Date: 2019-11-11・Journal Date: 2020-01-16</p>
                                             <p>The utility model discloses a novel aerify snow booys, including the inflatable packer, the inflatable packer front end is a circular wear structure, and the unflatable packer
@@ -441,7 +468,7 @@ $(document).ready(function() {
                                 <!-- Tab panes -->
                                 <div class="tab-content" id="tab-1">
                                   <div role="tabpanel" class="tab-pane active" id="Bibliographic-data"> 
-                                    <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">  
+                                    <ul style="margin-top: 30px;">  
                                       <li>
                                         <label for="name" class="bold-label">Application Number</label>
                                         <span>10202002094R</span>
@@ -507,7 +534,7 @@ $(document).ready(function() {
                                   </div>
                                   
                                   <div role="tabpanel" class="tab-pane" id="Description">
-                                    <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">TECHNICAL FIELD
+                                    <ul style="margin-top: 30px; ">TECHNICAL FIELD
 
                                     The Utility model relates snow boots technology, specifically a new inflatable snow boots. Background technique
                                     Snow boots winter season as a practical footwear, popular in recent years. However, existing municipal court in snow deep snow boots when walking area, there will be a security risk. Therefore, the prior art still has the following problems:
@@ -516,32 +543,25 @@ $(document).ready(function() {
                                     3. Using more simple;
                                     4. Inconvenient to use</div>
                                   <div role="tabpanel" class="tab-pane" id="Claims">
-                                    <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">1. A New inflatable snow boots, characterised by: including inflatable mattress, inflatable cushion front-end structure of a circular arc, inflatable cushions backend triangular structure, inflatable bottom portion is provided with a wear-resistant reinforcing layer, intermediate inflatable mattress has snow boots place unit, placed on the surface of the snow boots with a plurality of concave portions, snow boots, snow boots placed in the unit in place, and with a bandage fixed.
+                                    <ul style="margin-top: 30px;">1. A New inflatable snow boots, characterised by: including inflatable mattress, inflatable cushion front-end structure of a circular arc, inflatable cushions backend triangular structure, inflatable bottom portion is provided with a wear-resistant reinforcing layer, intermediate inflatable mattress has snow boots place unit, placed on the surface of the snow boots with a plurality of concave portions, snow boots, snow boots placed in the unit in place, and with a bandage fixed.
                                     2. According to the new inflatable snow boots as claimed in claim 1, characterised in that: said inflatable cushions for snow boots twice the area of the sole.
                                     3. According to the new inflatable snow boots according to claim 2, wherein;  the sole including the neel of the snow boots, the foot and front foot, with a plurality of circular projections block heel and the front food, arranged along</div>
                                   </ul>
-                                    <div role="tabpanel" class="tab-pane" id="Drawings"> <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">TECHNICAL FIELD
+                                    <div role="tabpanel" class="tab-pane" id="Drawings"> <ul style="margin-top: 30px;">-
 
-                                      The Utility model relates snow boots technology, specifically a new inflatable snow boots. Background technique
-                                      Snow boots winter season as a practical footwear, popular in recent years. However, existing municipal court in snow deep snow boots when walking area, there will be a security risk. Therefore, the prior art still has the following problems:
-                                      1. The snow is not easy to pass;
-                                      2. Waterproof performance is poor;
-                                      3. Using more simple;
-                                      4. Inconvenient to use</div>
+                                      DRAWING IMAGES</div>
                                 </div>
                               
                               </div>
 
                               <div class="col-sm-12 col-md-6" >
-
-                            
                                             <!-- Tab panes 2 -->
                                             <div class="tab-content" id="tab-2">
                                               <div role="tabpanel" class="tab-pane active" id="tab-2-Bibliographic-data"> 
-                                                <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">  
+                                                <ul style="margin-top: 30px;">  
                                                   <li>
-                                                    <label for="name" class="bold-label">1</label>
-                                                    <span>10202002094R</span>
+                                                    <label for="name" class="bold-label">Application Number</label>
+                                                    <span>10202002094A</span>
                                                   </li>
                                                   <li>
                                                     <label for="email" class="bold-label">Application Status</label>
@@ -605,7 +625,7 @@ $(document).ready(function() {
                                               
                                               
                                               <div role="tabpanel" class="tab-pane" id="tab-2-Description">
-                                                <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">TECHNICAL FIELD
+                                                <ul style="margin-top: 30px;">TECHNICAL FIELD
             
                                                 The Utility model relates snow boots technology, specifically a new inflatable snow boots. Background technique
                                                 Snow boots winter season as a practical footwear, popular in recent years. However, existing municipal court in snow deep snow boots when walking area, there will be a security risk. Therefore, the prior art still has the following problems:
@@ -616,25 +636,20 @@ $(document).ready(function() {
                                               </ul>
                                               </div>
                                               <div role="tabpanel" class="tab-pane" id="Claims">
-                                                <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">1. A New inflatable snow boots, characterised by: including inflatable mattress, inflatable cushion front-end structure of a circular arc, inflatable cushions backend triangular structure, inflatable bottom portion is provided with a wear-resistant reinforcing layer, intermediate inflatable mattress has snow boots place unit, placed on the surface of the snow boots with a plurality of concave portions, snow boots, snow boots placed in the unit in place, and with a bandage fixed.
+                                                <ul style="margin-top: 30px; ">1. A New inflatable snow boots, characterised by: including inflatable mattress, inflatable cushion front-end structure of a circular arc, inflatable cushions backend triangular structure, inflatable bottom portion is provided with a wear-resistant reinforcing layer, intermediate inflatable mattress has snow boots place unit, placed on the surface of the snow boots with a plurality of concave portions, snow boots, snow boots placed in the unit in place, and with a bandage fixed.
                                                 2. According to the new inflatable snow boots as claimed in claim 1, characterised in that: said inflatable cushions for snow boots twice the area of the sole.
                                                 3. According to the new inflatable snow boots according to claim 2, wherein;  the sole including the neel of the snow boots, the foot and front foot, with a plurality of circular projections block heel and the front food, arranged along
                                               </ul>
                                               </div>
                                               
                                                 <div role="tabpanel" class="tab-pane" id="Drawings"> 
-                                                  <ul style="margin-top: 30px; overflow-y: scroll; height: 1000px; float: left">TECHNICAL FIELD
+                                                  <ul style="margin-top: 30px; ">-
             
-                                                  The Utility model relates snow boots technology, specifically a new inflatable snow boots. Background technique
-                                                  Snow boots winter season as a practical footwear, popular in recent years. However, existing municipal court in snow deep snow boots when walking area, there will be a security risk. Therefore, the prior art still has the following problems:
-                                                  1. The snow is not easy to pass;
-                                                  2. Waterproof performance is poor;
-                                                  3. Using more simple;
-                                                  4. Inconvenient to use
+                                                  DRAWING IMAGES
                                                 </ul>
                                                 </div>
                                               </div>
-                                          
+                                          </table>
                                         
                                           
                                           
@@ -841,14 +856,42 @@ rows.forEach(function(row) {
 $(document).ready(function(){
   $('.selectpicker').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
     var selected = $(e.currentTarget).val();
-    if (selected.includes('IP Status')) {
-      $('#filterBy').show();
-    } else if ($(e.target).closest('.dropdown-menu').attr('id') == 'filterDropdownMenu') {
-      $('#filterBy').hide();
+    if (e.currentTarget.id === 'filter-by') {
+      if (selected.includes('IP Status')) {
+        $('#filterBy').show();
+      } else {
+        $('#filterBy').hide();
+      }
     }
   });
 });
 
+</script>
+<script>
+function toggleThumbnails() {
+  var display = document.getElementById('display-mode').value;
+  if (display == 'thumbnails') {
+    $('.thumbnail').show();
+    $('td[data-title="table-drawing"]').hide();
+  } else if (display == 'text') {
+    $('.thumbnail').hide();
+    $('td[data-title!="table-drawing"]').show();
+    $('td[data-title="table-drawing"]').hide();
+  } else if (display == 'compact') {
+    $('.thumbnail').hide();
+    $('td[data-title!="table-drawing"]').show();
+    $('td[data-title="table-drawing"]').hide();
+  } else if (display == 'textthumbnails') {
+    $('.thumbnail').show();
+    $('td[data-title!="table-drawing"]').show();
+    $('td[data-title="table-drawing"]').show();
+  }
+
+  // Hide the "Drawing Images" column if the selected display mode is not "Text and Thumbnails"
+  if (display != 'textthumbnails') {
+    $('td[data-title="table-drawing"]').hide();
+  }
+}
 </script>
   </body>
 </html>
